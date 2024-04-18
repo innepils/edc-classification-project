@@ -26,6 +26,6 @@ c3_test = [c3_all(N+1:N+M, :)];
 
 %% MSE based training of linear classifier
 alpha = 1;      % step factor 
-g = [W w0]*[] 
+g = [W w0]*[]
 
 
