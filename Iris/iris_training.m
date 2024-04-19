@@ -1,7 +1,8 @@
 clear all
 clc
 
-%% Constant values
+%% Initialization
+% Constant values
 C = 3;          % number of classes
 D = 4;          % number of features
 N = 30;         % size of training set
@@ -9,12 +10,12 @@ M = 20;         % size of test set
 
 iter = 1000;
 
-%% Initialize data set
+% Initialize data set
 c1_all = load('Data/class_1'); % Setosa
 c2_all = load('Data/class_2'); % Versicolor
 c3_all = load('Data/class_3'); % Virginica
 
-%% Initialize training set
+% Initialize training set
 % Individual training sets (first 30)
 c1_training = [c1_all(1:N,:)];
 c2_training = [c2_all(1:N,:)];
@@ -27,7 +28,7 @@ c3_training = [c3_all(1:N,:)];
 
 c_training = [c1_training; c2_training; c3_training]';
 
-%% Initialize test set
+% Initialize test set
 % Individual test sets (last 20)
 c1_test = [c1_all(N+1:N+M, :)];
 c2_test = [c2_all(N+1:N+M, :)];
@@ -40,13 +41,14 @@ c3_test = [c3_all(N+1:N+M, :)];
 
 c_test = [c1_test; c2_test; c3_test]';
 
-%% Targets
+%% Task 1
+% Targets
 t1 = [1 0 0]' .* ones(1, 30);
 t2 = [0 1 0]' .* ones(1, 30);
 t3 = [0 0 1]' .* ones(1, 30);
 T = [t1 t2 t3];
 
-%% MSE based training of linear classifier
+% MSE based training of linear classifier
 W = zeros(C, D);              % Initialize weight matrix
 w0 = zeros(C, 1);
 W = [W w0];
@@ -76,7 +78,7 @@ for m = 1:iter
     gradients_MSE_training = norm(gradients_MSE_training);
 end
 
-%% Confusion matrix
+% Confusion matrix
 predicted_training_labels = zeros(1, N*C);
 predicted_test_labels = zeros(1, M*C);
 actual_training_labels = kron(1:C, ones(1, N));
@@ -117,11 +119,16 @@ disp('Confusion Matrix (Test Set):');
 disp(confusion_matrix_test);
 fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
 
-%%
+%
 figure(1);
 plot(1:iter, error_rate_test);
 ylabel('MSE');
 xlabel('Iterations');
+
+
+%% Task 2
+
+
 
 %% Sigmoid function
 function y = sigmoid(x)
