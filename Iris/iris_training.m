@@ -44,8 +44,9 @@ for k = 1:N
     gradient_z_g = g .*(1-g);
     gradient_w_z = c_training(k,:)';
     gradient_w_MSE = gradient_w_MSE + (gradient_g_MSE .* gradient_z_g)* gradient_w_z;
+    W = W - alpha * gradient_w_MSE;
 end
 
-function sigmoid_val = sigmoid(x)
-    sigmoid_val = 1 ./ (1 + exp(-x));
-end
+% function sigmoid_val = sigmoid(x)
+%     sigmoid_val = 1 ./ (1 + exp(-x));
+% end
