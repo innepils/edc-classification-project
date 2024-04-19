@@ -35,15 +35,12 @@ c3_test = [c3_all(N+1:N+M, :)];
 %% MSE based training of linear classifier
 W = zeros(D, C);              % Initialize weight matrix
 alpha = 0.01;                 % step factor 
-gradient_w_MSE = 0;
-% g = W .* c_training;
+g = W .* c_training;
 
 for k = 1:N
     
-    g = sigmoid(c_training(k, :));
+    g = sigmoid(c_training);
     gradient_g_MSE = g - T(k);
-    gradient_z_g = g .*(1-g);
-    gradient_w_z = c_training(k, :)';
+    
 
-    gradient_w_MSE = gradent_w_MSE + (gradient_g_MSE .* gradient_z_g)* gradient_w_z;
-end
+    gradient_w_MSE = ((sigmoid(c_training).*g))
