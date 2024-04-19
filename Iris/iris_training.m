@@ -14,6 +14,7 @@ iter = 1000;
 c1_all = load('Data/class_1'); % Setosa
 c2_all = load('Data/class_2'); % Versicolor
 c3_all = load('Data/class_3'); % Virginica
+c_all = [c1_all; c2_all; c3_all;];
 
 % Initialize training set
 % Individual training sets (first 30)
@@ -127,7 +128,6 @@ xlabel('Iterations');
 
 
 %% Task 2
-
 
 
 %% Sigmoid function
