@@ -4,6 +4,9 @@ clc
 %% Constant values
 C = 3;          % number of classes
 D = 4;          % number of features
+N = 30;         % size of training set
+M = 20;         % size of test set
+
 iter = 1000;
 
 %% Initialize data set
@@ -11,21 +14,31 @@ c1_all = load('Data/class_1'); % Setosa
 c2_all = load('Data/class_2'); % Versicolor
 c3_all = load('Data/class_3'); % Virginica
 
-
 %% Initialize training set
-% Individual training sets
-N = 30;     % size of training set
+% Individual training sets (first 30)
 c1_training = [c1_all(1:N,:)];
 c2_training = [c2_all(1:N,:)];
 c3_training = [c3_all(1:N,:)];
 
+% Individual training sets (last 30)
+% c1_training = [c1_all(M+1:end,:)];
+% c2_training = [c2_all(M+1:end,:)];
+% c3_training = [c3_all(M+1:end,:)];
+
 c_training = [c1_training; c2_training; c3_training]';
 
 %% Initialize test set
-M = 20;     % size of test set
+% Individual test sets (last 20)
 c1_test = [c1_all(N+1:N+M, :)];
 c2_test = [c2_all(N+1:N+M, :)];
 c3_test = [c3_all(N+1:N+M, :)];
+
+% Individual test sets (first 20)
+% c1_test = [c1_all(1:M,:)];
+% c2_test = [c2_all(1:M,:)];
+% c3_test = [c3_all(1:M,:)];
+
+c_test = [c1_test; c2_test; c3_test]';
 
 %% Targets
 t1 = [1 0 0]' .* ones(1, 30);
@@ -38,7 +51,7 @@ W = zeros(C, D);              % Initialize weight matrix
 w0 = zeros(C, 1);
 W = [W w0];
 
-alpha = 0.01;                 % step factor 
+alpha = 0.006;                 % step factor 
 MSE_training = zeros(1,iter);
 gradients_MSE_training = zeros(1, iter);
 
@@ -63,30 +76,51 @@ for m = 1:iter
     gradients_MSE_training = norm(gradients_MSE_training);
 end
 
+%% Confusion matrix
+predicted_training_labels = zeros(1, N*C);
+predicted_test_labels = zeros(1, M*C);
+actual_training_labels = kron(1:C, ones(1, N));
+actual_test_labels = kron(1:C, ones(1, M));
 
-%% Make predictions on the training set
-Z_train = c_training * W + b;
-Y_train = softmax(Z_train);
-[~, predicted_labels_train] = max(Y_train, [], 2);
-
-%% Construct the confusion matrix
-confusion_matrix_train = zeros(C, C);
-for i = 1:C
-    for j = 1:C
-        confusion_matrix_train(i, j) = sum(predicted_labels_train(c_training_labels == i) == j);
-    end
+% Classify training set
+for k = 1:size(c_training,2)
+    xk = [c_training(:,k); 1];
+    zk = W * xk + w0;
+    gk = sigmoid(zk);
+    [~, predicted_label] = max(gk);
+    predicted_training_labels(k) = predicted_label;
 end
 
-%% Calculate the error rate
-correct_predictions_train = sum(diag(confusion_matrix_train));
-total_predictions_train = sum(confusion_matrix_train(:));
-error_rate_train = 1 - (correct_predictions_train / total_predictions_train);
+% Classify test set
+for k = 1:size(c_test,2)
+    xk = [c_test(:,k); 1];
+    zk = W * xk + w0;
+    gk = sigmoid(zk);
+    [~, predicted_label] = max(gk);
+    predicted_test_labels(k) = predicted_label;
+end
 
-disp('Confusion Matrix for Training Set:');
-disp(confusion_matrix_train);
-fprintf('Error Rate for Training Set: %.2f%%\n', error_rate_train * 100);
+% Compute confusion matrix
+confusion_matrix_training = confusionmat(actual_training_labels, predicted_training_labels);
+confusion_matrix_test = confusionmat(actual_test_labels, predicted_test_labels);
 
-% Sigmoid function
+% Calculate error rate
+error_rate_training = 1 - sum(diag(confusion_matrix_training)) / sum(sum(confusion_matrix_training));
+error_rate_test = 1 - sum(diag(confusion_matrix_test)) / sum(sum(confusion_matrix_test));
+
+% Display confusion matrix and error rates
+disp('Confusion Matrix (Training Set):');
+disp(confusion_matrix_training);
+fprintf('Error Rate (Training Set): %.2f%%\n', error_rate_training * 100);
+
+disp('Confusion Matrix (Test Set):');
+disp(confusion_matrix_test);
+fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
+
+%%
+f
+
+%% Sigmoid function
 function y = sigmoid(x)
     y = 1 ./ (1 + exp(-x));
 end

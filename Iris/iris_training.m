@@ -4,7 +4,10 @@ clc
 %% Constant values
 C = 3;          % number of classes
 D = 4;          % number of features
-iter = 3000;
+N = 30;         % size of training set
+M = 20;         % size of test set
+
+iter = 1000;
 
 %% Initialize data set
 c1_all = load('Data/class_1'); % Setosa
@@ -12,19 +15,28 @@ c2_all = load('Data/class_2'); % Versicolor
 c3_all = load('Data/class_3'); % Virginica
 
 %% Initialize training set
-% Individual training sets
-N = 30;     % size of training set
+% Individual training sets (first 30)
 c1_training = [c1_all(1:N,:)];
 c2_training = [c2_all(1:N,:)];
 c3_training = [c3_all(1:N,:)];
 
+% Individual training sets (last 30)
+% c1_training = [c1_all(M+1:end,:)];
+% c2_training = [c2_all(M+1:end,:)];
+% c3_training = [c3_all(M+1:end,:)];
+
 c_training = [c1_training; c2_training; c3_training]';
 
 %% Initialize test set
-M = 20;     % size of test set
+% Individual test sets (last 20)
 c1_test = [c1_all(N+1:N+M, :)];
 c2_test = [c2_all(N+1:N+M, :)];
 c3_test = [c3_all(N+1:N+M, :)];
+
+% Individual test sets (first 20)
+% c1_test = [c1_all(1:M,:)];
+% c2_test = [c2_all(1:M,:)];
+% c3_test = [c3_all(1:M,:)];
 
 c_test = [c1_test; c2_test; c3_test]';
 
@@ -39,7 +51,7 @@ W = zeros(C, D);              % Initialize weight matrix
 w0 = zeros(C, 1);
 W = [W w0];
 
-alpha = 0.01;                 % step factor 
+alpha = 0.0025;                 % step factor 
 MSE_training = zeros(1,iter);
 gradients_MSE_training = zeros(1, iter);
 
@@ -104,6 +116,12 @@ fprintf('Error Rate (Training Set): %.2f%%\n', error_rate_training * 100);
 disp('Confusion Matrix (Test Set):');
 disp(confusion_matrix_test);
 fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
+
+%%
+figure(1);
+plot(1:iter, error_rate_test);
+ylabel('MSE');
+xlabel('Iterations');
 
 %% Sigmoid function
 function y = sigmoid(x)
