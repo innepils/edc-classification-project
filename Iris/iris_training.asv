@@ -4,17 +4,12 @@ clc
 %% Constant values
 C = 3;          % number of classes
 D = 4;          % number of features
-
-%% Targets
-t1 = [1 0 0]' .* ones(1, 30);
-t2 = [0 1 0]' .* ones(1, 30);
-t3 = [0 0 1]' .* ones(1, 30);
-T = [t1 t2 t3];
+iter = 1000;
 
 %% Initialize data set
-c1_all = load('Data/class_1', '-ascii'); % Setosa
-c2_all = load('Data/class_2', '-ascii'); % Versicolor
-c3_all = load('Data/class_3', '-ascii'); % Virginica
+c1_all = load('Data/class_1'); % Setosa
+c2_all = load('Data/class_2'); % Versicolor
+c3_all = load('Data/class_3'); % Virginica
 
 
 %% Initialize training set
@@ -24,7 +19,7 @@ c1_training = [c1_all(1:N,:)];
 c2_training = [c2_all(1:N,:)];
 c3_training = [c3_all(1:N,:)];
 
-c_training = [c1_training c2_training c3_training];
+c_training = [c1_training; c2_training; c3_training]';
 
 %% Initialize test set
 M = 20;     % size of test set
@@ -32,15 +27,66 @@ c1_test = [c1_all(N+1:N+M, :)];
 c2_test = [c2_all(N+1:N+M, :)];
 c3_test = [c3_all(N+1:N+M, :)];
 
+%% Targets
+t1 = [1 0 0]' .* ones(1, 30);
+t2 = [0 1 0]' .* ones(1, 30);
+t3 = [0 0 1]' .* ones(1, 30);
+T = [t1 t2 t3];
+
 %% MSE based training of linear classifier
-W = zeros(D, C);              % Initialize weight matrix
+W = zeros(C, D);              % Initialize weight matrix
+w0 = zeros(C, 1);
+W = [W w0];
+
 alpha = 0.01;                 % step factor 
-g = W .* c_training;
+MSE_training = zeros(1,iter);
+gradients_MSE_training = zeros(1, iter);
 
-for k = 1:N
-    
-    g = sigmoid(c_training);
-    gradient_g_MSE = g - T(k);
-    
+for m = 1:iter
+    gradient = 0;
+    MSE = 0;
 
-    gradient_w_MSE = ((sigmoid(c_training).*g))
+    for k = 1:size(c_training,2)
+        xk = [c_training(:,k); 1];
+
+        tk = T(:, k);
+
+        zk = W * xk + w0;
+        gk = sigmoid(zk);
+
+        gradient = gradient + (gk-tk) .*gk.*(1-gk)*xk';
+        MSE = MSE + 1/2 * (gk-tk)'*(gk-tk);
+    end
+
+    W = W - alpha * gradient;
+    MSE_training(m) = MSE;
+    gradients_MSE_training = norm(gradients_MSE_training);
+end
+
+
+%% Make predictions on the training set
+Z_train = c_training * W + b;
+Y_train = softmax(Z_train);
+[~, predicted_labels_train] = max(Y_train, [], 2);
+
+%% Construct the confusion matrix
+confusion_matrix_train = zeros(C, C);
+for i = 1:C
+    for j = 1:C
+        confusion_matrix_train(i, j) = sum(predicted_labels_train(c_training_labels == i) == j);
+    end
+end
+
+%% Calculate the error rate
+correct_predictions_train = sum(diag(confusion_matrix_train));
+total_predictions_train = sum(confusion_matrix_train(:));
+error_rate_train = 1 - (correct_predictions_train / total_predictions_train);
+
+disp('Confusion Matrix for Training Set:');
+disp(confusion_matrix_train);
+fprintf('Error Rate for Training Set: %.2f%%\n', error_rate_train * 100);
+
+% Sigmoid function
+function y = sigmoid(x)
+    y = 1 ./ (1 + exp(-x));
+end
