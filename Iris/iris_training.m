@@ -24,7 +24,7 @@ c1_training = [c1_all(1:N,:)];
 c2_training = [c2_all(1:N,:)];
 c3_training = [c3_all(1:N,:)];
 
-c_training = [c1_training c2_training c3_training];
+c_training = [c1_training; c2_training; c3_training];
 
 %% Initialize test set
 M = 20;     % size of test set
@@ -39,11 +39,13 @@ gradient_w_MSE = 0;
 % g = W .* c_training;
 
 for k = 1:N
-    
-    g = sigmoid(c_training(k, :));
+    g = sigmoid(c_training(k,:));
     gradient_g_MSE = g - T(k);
     gradient_z_g = g .*(1-g);
-    gradient_w_z = c_training(k, :)';
+    gradient_w_z = c_training(k,:)';
+    gradient_w_MSE = gradient_w_MSE + (gradient_g_MSE .* gradient_z_g)* gradient_w_z;
+end
 
-    gradient_w_MSE = gradent_w_MSE + (gradient_g_MSE .* gradient_z_g)* gradient_w_z;
+function sigmoid_val = sigmoid(x)
+    sigmoid_val = 1 ./ (1 + exp(-x));
 end
