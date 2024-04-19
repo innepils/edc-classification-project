@@ -11,54 +11,26 @@ M = 20;         % size of test set
 
 iter = 1000;
 
-% Initialize data set (all features)
+% Load data set
 c1_all = load('Data/class_1'); % Setosa
 c2_all = load('Data/class_2'); % Versicolor
 c3_all = load('Data/class_3'); % Virginica
 
-c_all = [c1_all; c2_all; c3_all;];
+% Remove feature from dataset
+feature_number = 2;
+c1_all = remove_feature(c1_all, feature_number);
+c2_all = remove_feature(c2_all, feature_number);
+c3_all = remove_feature(c3_all, feature_number);
 
-% Initialize data set (3 features)
+% Split data set into training set and test set
+partition_index = 30;
+[c1_training, c1_test] = partition_dataset(c1_all,partition_index);
+[c2_training, c2_test] = partition_dataset(c1_all,partition_index);
+[c3_training, c3_test] = partition_dataset(c1_all,partition_index);
 
-c1_3f = c1_all; c1_3f(:,2) = [];
-c2_3f = c2_all; c2_3f(:,2) = [];
-c3_3f = c3_all; c3_3f(:,2) = [];
-
-% Initialize training set
-% Individual training sets (first 30)
-% c1_training = [c1_all(1:N,:)];
-% c2_training = [c2_all(1:N,:)];
-% c3_training = [c3_all(1:N,:)];
-
-% Individual training sets (last 30)
-% c1_training = [c1_all(M+1:end,:)];
-% c2_training = [c2_all(M+1:end,:)];
-% c3_training = [c3_all(M+1:end,:)];
-
-%Training set with reduced features (first 30)
-c1_training = [c1_3f(1:N,:)];
-c2_training = [c2_3f(1:N,:)];
-c3_training = [c3_3f(1:N,:)];
-
-
+% Merge datasets 
+c_all = [c1_all; c2_all; c3_all;]';
 c_training = [c1_training; c2_training; c3_training]';
-
-% Initialize test set
-% Individual test sets (last 20)
-% c1_test = [c1_all(N+1:N+M, :)];
-% c2_test = [c2_all(N+1:N+M, :)];
-% c3_test = [c3_all(N+1:N+M, :)];
-
-% Individual test sets (first 20)
-% c1_test = [c1_all(1:M,:)];
-% c2_test = [c2_all(1:M,:)];
-% c3_test = [c3_all(1:M,:)];
-
-%Test set with reduced features (last 20)
-c1_test = [c1_3f(N+1:N+M, :)];
-c2_test = [c2_3f(N+1:N+M, :)];
-c3_test = [c3_3f(N+1:N+M, :)];
-
 c_test = [c1_test; c2_test; c3_test]';
 
 %% Task 1
