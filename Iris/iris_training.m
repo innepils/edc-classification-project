@@ -26,6 +26,8 @@ c1_test = [c1_all(N+1:N+M, :)];
 c2_test = [c2_all(N+1:N+M, :)];
 c3_test = [c3_all(N+1:N+M, :)];
 
+c_test = [c1_test; c2_test; c3_test]';
+
 %% Targets
 t1 = [1 0 0]' .* ones(1, 30);
 t2 = [0 1 0]' .* ones(1, 30);
@@ -62,15 +64,48 @@ for m = 1:iter
     gradients_MSE_training = norm(gradients_MSE_training);
 end
 
-
 %% Confusion matrix
 predicted_training_labels = zeros(1, N*C);
 predicted_test_labels = zeros(1, M*C);
 actual_training_labels = kron(1:C, ones(1, N));
 actual_test_labels = kron(1:C, ones(1, M));
 
+% Classify training set
+for k = 1:size(c_training,2)
+    xk = [c_training(:,k); 1];
+    zk = W * xk + w0;
+    gk = sigmoid(zk);
+    [~, predicted_label] = max(gk);
+    predicted_training_labels(k) = predicted_label;
+end
 
-% Sigmoid function
+% Classify test set
+for k = 1:size(c_test,2)
+    xk = [c_test(:,k); 1];
+    zk = W * xk + w0;
+    gk = sigmoid(zk);
+    [~, predicted_label] = max(gk);
+    predicted_test_labels(k) = predicted_label;
+end
+
+% Compute confusion matrix
+confusion_matrix_training = confusionmat(actual_training_labels, predicted_training_labels);
+confusion_matrix_test = confusionmat(actual_test_labels, predicted_test_labels);
+
+% Calculate error rate
+error_rate_training = 1 - sum(diag(confusion_matrix_training)) / sum(sum(confusion_matrix_training));
+error_rate_test = 1 - sum(diag(confusion_matrix_test)) / sum(sum(confusion_matrix_test));
+
+% Display confusion matrix and error rates
+disp('Confusion Matrix (Training Set):');
+disp(confusion_matrix_training);
+fprintf('Error Rate (Training Set): %.2f%%\n', error_rate_training * 100);
+
+disp('Confusion Matrix (Test Set):');
+disp(confusion_matrix_test);
+fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
+
+%% Sigmoid function
 function y = sigmoid(x)
     y = 1 ./ (1 + exp(-x));
 end
