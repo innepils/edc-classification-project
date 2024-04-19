@@ -11,7 +11,6 @@ c1_all = load('Data/class_1'); % Setosa
 c2_all = load('Data/class_2'); % Versicolor
 c3_all = load('Data/class_3'); % Virginica
 
-
 %% Initialize training set
 % Individual training sets
 N = 30;     % size of training set
@@ -65,6 +64,11 @@ end
 
 
 %% Confusion matrix
+predicted_training_labels = zeros(1, N*C);
+predicted_test_labels = zeros(1, M*C);
+actual_training_labels = kron(1:C, ones(1, N));
+actual_test_labels = kron(1:C, ones(1, M));
+
 
 % Sigmoid function
 function y = sigmoid(x)
