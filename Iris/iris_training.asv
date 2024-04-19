@@ -1,46 +1,41 @@
 clear all
 clc
-close all
 
-%% Initialization
-% Constant values
+%% Constant values
 C = 3;          % number of classes
 D = 4;          % number of features
-N = 30;         % size of training set
-M = 20;         % size of test set
+iter = 2500;
 
-iter = 3000;
-
-% Load data set 
+%% Initialize data set
 c1_all = load('Data/class_1'); % Setosa
 c2_all = load('Data/class_2'); % Versicolor
 c3_all = load('Data/class_3'); % Virginica
 
-% Remove feature from dataset
-% feature_number = 2;
-% c1_all = remove_feature(c1_all, feature_number);
-% c2_all = remove_feature(c2_all, feature_number);
-% c3_all = remove_feature(c3_all, feature_number);
+%% Initialize training set
+% Individual training sets
+M = 20;     % size of test set
+N = 30;     % size of training set
+c1_training = [c1_all(M+1:end,:)];
+c2_training = [c2_all(M+1:end,:)];
+c3_training = [c3_all(M+1:end,:)];
 
-% Split data set into training set and test set
-partition_index = 30;
-[c1_training, c1_test] = partition_dataset(c1_all,partition_index);
-[c2_training, c2_test] = partition_dataset(c2_all,partition_index);
-[c3_training, c3_test] = partition_dataset(c3_all,partition_index);
-
-% Merge datasets 
-c_all = [c1_all; c2_all; c3_all;]';
 c_training = [c1_training; c2_training; c3_training]';
+
+%% Initialize test set
+
+c1_test = [c1_all(1:M,:)];
+c2_test = [c2_all(1:M,:)];
+c3_test = [c3_all(1:M,:)];
+
 c_test = [c1_test; c2_test; c3_test]';
 
-%% Task 1
-% Targets
+%% Targets
 t1 = [1 0 0]' .* ones(1, 30);
 t2 = [0 1 0]' .* ones(1, 30);
 t3 = [0 0 1]' .* ones(1, 30);
 T = [t1 t2 t3];
 
-% MSE based training of linear classifier
+%% MSE based training of linear classifier
 W = zeros(C, D);              % Initialize weight matrix
 w0 = zeros(C, 1);
 W = [W w0];
@@ -70,7 +65,7 @@ for m = 1:iter
     gradients_MSE_training = norm(gradients_MSE_training);
 end
 
-% Confusion matrix
+%% Confusion matrix
 predicted_training_labels = zeros(1, N*C);
 predicted_test_labels = zeros(1, M*C);
 actual_training_labels = kron(1:C, ones(1, N));
@@ -110,26 +105,6 @@ fprintf('Error Rate (Training Set): %.2f%%\n', error_rate_training * 100);
 disp('Confusion Matrix (Test Set):');
 disp(confusion_matrix_test);
 fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
-
-%% Task 2
-% Plots of features
-%histogram_feature(c1_all, c2_all, c3_all, 1, 1, 'Sepal length');
-%histogram_feature(c1_all, c2_all, c3_all, 2, 2, 'Sepal width');
-%histogram_feature(c1_all, c2_all, c3_all, 3, 3, 'Petal length');
-%histogram_feature(c1_all, c2_all, c3_all, 4, 4, 'Petal length');
-
-%Scatter plot of features
-%scatter_plot(c1_all, c2_all, c3_all, 5);
-
-figure(6);
-plot(1:iter, MSE_training);
-ylabel('MSE');
-xlabel('Iterations');
-
-figure(7);
-plot(1:iter, error_rate_training);
-ylabel('Error rate');
-xlabel('Iterations');
 
 %% Sigmoid function
 function y = sigmoid(x)
