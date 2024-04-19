@@ -1,20 +1,30 @@
 clear all
 clc
+close all
 
-%% Constant values
+%% Initialization
+% Constant values
 C = 3;          % number of classes
-D = 4;          % number of features
+D = 3;          % number of features
 N = 30;         % size of training set
 M = 20;         % size of test set
 
 iter = 1000;
 
-%% Initialize data set
+% Initialize data set (all features)
 c1_all = load('Data/class_1'); % Setosa
 c2_all = load('Data/class_2'); % Versicolor
 c3_all = load('Data/class_3'); % Virginica
 
-%% Initialize training set
+c_all = [c1_all; c2_all; c3_all;];
+
+% Initialize data set (3 features)
+
+c1_3f = c1_all; c1_3f(:,2) = [];
+c2_3f = c2_all; c2_3f(:,2) = [];
+c3_3f = c3_all; c3_3f(:,2) = [];
+
+% Initialize training set
 % Individual training sets (first 30)
 c1_training = [c1_all(1:N,:)];
 c2_training = [c2_all(1:N,:)];
@@ -27,7 +37,7 @@ c3_training = [c3_all(1:N,:)];
 
 c_training = [c1_training; c2_training; c3_training]';
 
-%% Initialize test set
+% Initialize test set
 % Individual test sets (last 20)
 c1_test = [c1_all(N+1:N+M, :)];
 c2_test = [c2_all(N+1:N+M, :)];
@@ -40,18 +50,19 @@ c3_test = [c3_all(N+1:N+M, :)];
 
 c_test = [c1_test; c2_test; c3_test]';
 
-%% Targets
+%% Task 1
+% Targets
 t1 = [1 0 0]' .* ones(1, 30);
 t2 = [0 1 0]' .* ones(1, 30);
 t3 = [0 0 1]' .* ones(1, 30);
 T = [t1 t2 t3];
 
-%% MSE based training of linear classifier
+% MSE based training of linear classifier
 W = zeros(C, D);              % Initialize weight matrix
 w0 = zeros(C, 1);
 W = [W w0];
 
-alpha = 0.006;                 % step factor 
+alpha = 0.0025;                 % step factor 
 MSE_training = zeros(1,iter);
 gradients_MSE_training = zeros(1, iter);
 
@@ -76,7 +87,7 @@ for m = 1:iter
     gradients_MSE_training = norm(gradients_MSE_training);
 end
 
-%% Confusion matrix
+% Confusion matrix
 predicted_training_labels = zeros(1, N*C);
 predicted_test_labels = zeros(1, M*C);
 actual_training_labels = kron(1:C, ones(1, N));
@@ -117,8 +128,82 @@ disp('Confusion Matrix (Test Set):');
 disp(confusion_matrix_test);
 fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
 
-%%
-f
+%
+% figure(1);
+% plot(1:iter, error_rate_test);
+% ylabel('MSE');
+% xlabel('Iterations');
+
+
+%% Task 2
+%sepal length
+sl1 = c1_all(:, 1);
+sl2 = c2_all(:, 1);
+sl3 = c3_all(:, 1);
+%% 
+
+figure(2)
+
+hold on
+sl_h1 = histogram(sl1);
+sl_h1.BinWidth = 0.25;
+sl_h2 = histogram(sl2);
+sl_h2.BinWidth = 0.25;
+sl_h3 = histogram(sl3);
+sl_h3.BinWidth = 0.25;
+legend('Setosa', 'Versicolor', 'Virginica'); title('Sepal length')
+hold off
+
+%sepal width
+sw1 = c1_all(:, 2);
+sw2 = c2_all(:, 2);
+sw3 = c3_all(:, 2);
+
+figure(3)
+
+hold on
+sw_h1 = histogram(sw1);
+sw_h1.BinWidth = 0.25;
+sw_h2 = histogram(sw2);
+sw_h2.BinWidth = 0.25;
+sw_h3 = histogram(sw3);
+sw_h3.BinWidth = 0.25;
+legend('Setosa', 'Versicolor', 'Virginica'); title('Sepal width')
+hold off
+
+%petal length
+pl1 = c1_all(:, 3);
+pl2 = c2_all(:, 3);
+pl3 = c3_all(:, 3);
+
+figure(4)
+
+hold on
+pl_h1 = histogram(pl1);
+pl_h1.BinWidth = 0.25;
+pl_h2 = histogram(pl2);
+pl_h2.BinWidth = 0.25;
+pl_h3 = histogram(pl3);
+pl_h3.BinWidth = 0.25;
+legend('Setosa', 'Versicolor', 'Virginica'); title('Petal length')
+hold off
+
+%petal width
+pw1 = c1_all(:, 4);
+pw2 = c2_all(:, 4);
+pw3 = c3_all(:, 4);
+
+figure(5)
+
+hold on
+pw_h1 = histogram(pw1);
+pw_h1.BinWidth = 0.25;
+pw_h2 = histogram(pw2);
+pw_h2.BinWidth = 0.25;
+pw_h3 = histogram(pw3);
+pw_h3.BinWidth = 0.25;
+legend('Setosa', 'Versicolor', 'Virginica'); title('Petal width')
+hold off
 
 %% Sigmoid function
 function y = sigmoid(x)
