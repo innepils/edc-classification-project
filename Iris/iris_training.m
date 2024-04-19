@@ -4,7 +4,7 @@ clc
 %% Constant values
 C = 3;          % number of classes
 D = 4;          % number of features
-iter = 3000;
+iter = 5000;
 
 %% Initialize data set
 c1_all = load('Data/class_1'); % Setosa
@@ -13,18 +13,19 @@ c3_all = load('Data/class_3'); % Virginica
 
 %% Initialize training set
 % Individual training sets
+M = 20;     % size of test set
 N = 30;     % size of training set
-c1_training = [c1_all(1:N,:)];
-c2_training = [c2_all(1:N,:)];
-c3_training = [c3_all(1:N,:)];
+c1_training = [c1_all(M+1:end,:)];
+c2_training = [c2_all(M+1:end,:)];
+c3_training = [c3_all(M+1:end,:)];
 
 c_training = [c1_training; c2_training; c3_training]';
 
 %% Initialize test set
-M = 20;     % size of test set
-c1_test = [c1_all(N+1:N+M, :)];
-c2_test = [c2_all(N+1:N+M, :)];
-c3_test = [c3_all(N+1:N+M, :)];
+
+c1_test = [c1_all(1:M,:)];
+c2_test = [c2_all(1:M,:)];
+c3_test = [c3_all(1:M,:)];
 
 c_test = [c1_test; c2_test; c3_test]';
 
