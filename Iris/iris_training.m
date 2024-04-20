@@ -5,7 +5,7 @@ close all
 %% Initialization
 % Constant values
 C = 3;          % number of classes
-D = 3;          % number of features
+D = 4;          % number of features
 N = 30;         % size of training set
 M = 20;         % size of test set
 
@@ -17,16 +17,16 @@ c2_all = load('Data/class_2'); % Versicolor
 c3_all = load('Data/class_3'); % Virginica
 
 % Remove feature from dataset
-feature_number = 2;
-c1_all = remove_feature(c1_all, feature_number);
-c2_all = remove_feature(c2_all, feature_number);
-c3_all = remove_feature(c3_all, feature_number);
+% feature_number = 2;
+% c1_all = remove_feature(c1_all, feature_number);
+% c2_all = remove_feature(c2_all, feature_number);
+% c3_all = remove_feature(c3_all, feature_number);
 
 % Split data set into training set and test set
 partition_index = 30;
 [c1_training, c1_test] = partition_dataset(c1_all,partition_index);
-[c2_training, c2_test] = partition_dataset(c1_all,partition_index);
-[c3_training, c3_test] = partition_dataset(c1_all,partition_index);
+[c2_training, c2_test] = partition_dataset(c2_all,partition_index);
+[c3_training, c3_test] = partition_dataset(c3_all,partition_index);
 
 % Merge datasets 
 c_all = [c1_all; c2_all; c3_all;]';
@@ -119,74 +119,11 @@ fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
 
 
 %% Task 2
-%sepal length
-sl1 = c1_all(:, 1);
-sl2 = c2_all(:, 1);
-sl3 = c3_all(:, 1);
-%% 
+% Plots of features
+histogram_feature(c1_all, c2_all, c3_all, 1, 1, 'Sepal Length');
 
-figure(2)
-
-hold on
-sl_h1 = histogram(sl1);
-sl_h1.BinWidth = 0.25;
-sl_h2 = histogram(sl2);
-sl_h2.BinWidth = 0.25;
-sl_h3 = histogram(sl3);
-sl_h3.BinWidth = 0.25;
-legend('Setosa', 'Versicolor', 'Virginica'); title('Sepal length')
-hold off
-
-%sepal width
-sw1 = c1_all(:, 2);
-sw2 = c2_all(:, 2);
-sw3 = c3_all(:, 2);
-
-figure(3)
-
-hold on
-sw_h1 = histogram(sw1);
-sw_h1.BinWidth = 0.25;
-sw_h2 = histogram(sw2);
-sw_h2.BinWidth = 0.25;
-sw_h3 = histogram(sw3);
-sw_h3.BinWidth = 0.25;
-legend('Setosa', 'Versicolor', 'Virginica'); title('Sepal width')
-hold off
-
-%petal length
-pl1 = c1_all(:, 3);
-pl2 = c2_all(:, 3);
-pl3 = c3_all(:, 3);
-
-figure(4)
-
-hold on
-pl_h1 = histogram(pl1);
-pl_h1.BinWidth = 0.25;
-pl_h2 = histogram(pl2);
-pl_h2.BinWidth = 0.25;
-pl_h3 = histogram(pl3);
-pl_h3.BinWidth = 0.25;
-legend('Setosa', 'Versicolor', 'Virginica'); title('Petal length')
-hold off
-
-%petal width
-pw1 = c1_all(:, 4);
-pw2 = c2_all(:, 4);
-pw3 = c3_all(:, 4);
-
-figure(5)
-
-hold on
-pw_h1 = histogram(pw1);
-pw_h1.BinWidth = 0.25;
-pw_h2 = histogram(pw2);
-pw_h2.BinWidth = 0.25;
-pw_h3 = histogram(pw3);
-pw_h3.BinWidth = 0.25;
-legend('Setosa', 'Versicolor', 'Virginica'); title('Petal width')
-hold off
+%Scatter plot of features
+scatter_plot(c1_all, c2_all, c3_all, 2);
 
 %% Sigmoid function
 function y = sigmoid(x)

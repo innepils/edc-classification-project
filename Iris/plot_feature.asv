@@ -1,0 +1,22 @@
+function plot_feature(dataSet1, dataSet2, dataSet3, plotNumber,plotTitle)
+%PLOT_FEATURES Summary of this function goes here
+%   Detailed explanation goes here
+
+pl1 = c1_all(:, 3);
+pl2 = c2_all(:, 3);
+pl3 = c3_all(:, 3);
+
+figure(4)
+
+hold on
+pl_h1 = histogram(pl1);
+pl_h1.BinWidth = 0.25;
+pl_h2 = histogram(pl2);
+pl_h2.BinWidth = 0.25;
+pl_h3 = histogram(pl3);
+pl_h3.BinWidth = 0.25;
+legend('Setosa', 'Versicolor', 'Virginica'); title('Petal length')
+hold off
+
+end
+
