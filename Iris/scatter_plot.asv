@@ -1,0 +1,12 @@
+function scatter_plot(dataSet1, dataSet2, dataSet3, figNum)
+%SCATTER_PLOT Summary of this function goes here
+%   Detailed explanation goes here
+
+p1 = dataSet1(:, 1);
+p2 = dataSet2(:, 2);
+p3 = dataSet3(:, 3);
+
+
+
+end
+
