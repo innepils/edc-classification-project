@@ -15,8 +15,8 @@ chunk_size = 1000;
 %% NN-based classifier using the Euclidian distance
 
 
+
 % Euclidian distance decision rule
 function d = euc_dist(x, mu)
     d = (x-mu)' * (x-mu);
 end
-    
