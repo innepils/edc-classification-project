@@ -120,10 +120,14 @@ fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
 
 %% Task 2
 % Plots of features
-%histogram_feature(c1_all, c2_all, c3_all, 1, 1, 'Sepal Length');
+histogram_feature(c1_all, c2_all, c3_all, 1, 1, 'Sepal Length');
+histogram_feature(c1_all, c2_all, c3_all, 2, 2, 'Sepal Width');
+histogram_feature(c1_all, c2_all, c3_all, 3, 3, 'Petal Length');
+histogram_feature(c1_all, c2_all, c3_all, 4, 4, 'Petal Width');
+
 
 %Scatter plot of features
-scatter_plot(c1_all, c2_all, c3_all, 2);
+scatter_plot(c1_all, c2_all, c3_all, 5);
 
 %% Sigmoid function
 function y = sigmoid(x)
