@@ -120,7 +120,7 @@ fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
 
 %% Task 2
 % Plots of features
-histogram_feature(c1_all, c2_all, c3_all, 1, 1, 'Sepal Length');
+%histogram_feature(c1_all, c2_all, c3_all, 1, 1, 'Sepal Length');
 
 %Scatter plot of features
 scatter_plot(c1_all, c2_all, c3_all, 2);
