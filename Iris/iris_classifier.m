@@ -95,8 +95,8 @@ for k = 1:size(c_test,2)
 end
 
 % Compute confusion matrix
-confusion_matrix_training = confusionmat(actual_training_labels, predicted_training_labels);
-confusion_matrix_test = confusionmat(actual_test_labels, predicted_test_labels);
+confusion_matrix_training = confusionchart(actual_training_labels, predicted_training_labels);
+confusion_matrix_test = confusionchart(actual_test_labels, predicted_test_labels);
 
 % Calculate error rate
 error_rate_training = 1 - sum(diag(confusion_matrix_training)) / sum(sum(confusion_matrix_training));
@@ -121,9 +121,14 @@ fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
 %Scatter plot of features
 %scatter_plot(c1_all, c2_all, c3_all, 5);
 
-% figure(6);
+figure(6);
 plot(1:iter, MSE_training);
 ylabel('MSE');
+xlabel('Iterations');
+
+figure(7);
+plot(1:iter, error_rate_training);
+ylabel('Error rate');
 xlabel('Iterations');
 
 %% Sigmoid function
