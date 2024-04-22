@@ -11,7 +11,7 @@ M = 20;         % size of test set
 
 iter = 3000;
 
-% Load data set
+% Load data set 
 c1_all = load('Data/class_1'); % Setosa
 c2_all = load('Data/class_2'); % Versicolor
 c3_all = load('Data/class_3'); % Virginica
@@ -95,8 +95,8 @@ for k = 1:size(c_test,2)
 end
 
 % Compute confusion matrix
-confusion_matrix_training = confusionchart(actual_training_labels, predicted_training_labels);
-confusion_matrix_test = confusionchart(actual_test_labels, predicted_test_labels);
+confusion_matrix_training = confusionmat(actual_training_labels, predicted_training_labels);
+confusion_matrix_test = confusionmat(actual_test_labels, predicted_test_labels);
 
 % Calculate error rate
 error_rate_training = 1 - sum(diag(confusion_matrix_training)) / sum(sum(confusion_matrix_training));
