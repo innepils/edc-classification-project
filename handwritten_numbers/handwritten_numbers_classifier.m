@@ -9,7 +9,6 @@ num_classes = 10;
 % Initialize data set
 load('data/data_all.mat');
 
-<<<<<<< HEAD
 % Split data set into chunks of samples
 chunk_size = 10;
 =======
