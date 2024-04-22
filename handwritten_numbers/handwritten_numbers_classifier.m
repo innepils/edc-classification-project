@@ -9,8 +9,13 @@ num_classes = 10;
 % Initialize data set
 load('data/data_all.mat');
 
+<<<<<<< HEAD
 % Split data set into chunks of samples
 chunk_size = 10;
+=======
+% Split data set into chunks of images
+chunk_size = 1000;
+>>>>>>> 637bf1f (work on task 1)
 training_set = split_to_chunks(trainv, 1, chunk_size);
 training_set = split_to_chunks(trainv, 1, chunk_size);
 training_set = split_to_chunks(trainv, 1, chunk_size);
