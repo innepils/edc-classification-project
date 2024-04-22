@@ -9,7 +9,7 @@ D = 4;          % number of features
 N = 30;         % size of training set
 M = 20;         % size of test set
 
-iter = 1000;
+iter = 3000;
 
 % Load data set
 c1_all = load('Data/class_1'); % Setosa
@@ -45,7 +45,7 @@ W = zeros(C, D);              % Initialize weight matrix
 w0 = zeros(C, 1);
 W = [W w0];
 
-alpha = 0.0025;                 % step factor 
+alpha = 0.01;                 % step factor 
 MSE_training = zeros(1,iter);
 gradients_MSE_training = zeros(1, iter);
 
@@ -111,23 +111,20 @@ disp('Confusion Matrix (Test Set):');
 disp(confusion_matrix_test);
 fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
 
-%
-% figure(1);
-% plot(1:iter, error_rate_test);
-% ylabel('MSE');
-% xlabel('Iterations');
-
-
 %% Task 2
 % Plots of features
-histogram_feature(c1_all, c2_all, c3_all, 1, 1, 'Sepal Length');
-histogram_feature(c1_all, c2_all, c3_all, 2, 2, 'Sepal Width');
-histogram_feature(c1_all, c2_all, c3_all, 3, 3, 'Petal Length');
-histogram_feature(c1_all, c2_all, c3_all, 4, 4, 'Petal Width');
-
+%histogram_feature(c1_all, c2_all, c3_all, 1, 1, 'Sepal length');
+%histogram_feature(c1_all, c2_all, c3_all, 2, 2, 'Sepal width');
+%histogram_feature(c1_all, c2_all, c3_all, 3, 3, 'Petal length');
+%histogram_feature(c1_all, c2_all, c3_all, 4, 4, 'Petal length');
 
 %Scatter plot of features
-scatter_plot(c1_all, c2_all, c3_all, 5);
+%scatter_plot(c1_all, c2_all, c3_all, 5);
+
+% figure(6);
+plot(1:iter, MSE_training);
+ylabel('MSE');
+xlabel('Iterations');
 
 %% Sigmoid function
 function y = sigmoid(x)
