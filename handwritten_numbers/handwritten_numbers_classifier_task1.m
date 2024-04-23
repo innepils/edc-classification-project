@@ -2,6 +2,7 @@ clear all
 clc
 close all
 
+
 %% Initialization
 % Constant values
 num_classes = 10;
@@ -23,11 +24,12 @@ train_images = trainv;
 train_labels = trainlab;
 
 % Test on a subset of 100 samples
-num_test_samples = 1000;
+num_test_samples = 100;
 test_images = testv(1:num_test_samples, :);
 test_labels = testlab(1:num_test_samples);
 
 % Iterate over test images
+tic
 for j = 1:num_test_samples
     % Compute euclidean distance
     distances = sqrt(sum((train_images - test_images(j, :)).^2, 2));
@@ -53,6 +55,7 @@ for j = 1:num_test_samples
     end
 end
 
+
 % Compute error rate
 error_rate = 1 - sum(diag(confusion_matrix)) / sum(sum(confusion_matrix));
 
@@ -60,7 +63,7 @@ error_rate = 1 - sum(diag(confusion_matrix)) / sum(sum(confusion_matrix));
 disp('Confusion Matrix:');
 disp(confusion_matrix);
 fprintf('Error Rate: %.2f%%\n', error_rate * 100);
-
+toc
 %% Task 1b and 1c - Plotting
 % x = zeros(28,28);
 % x(:) = testv(116,:);
