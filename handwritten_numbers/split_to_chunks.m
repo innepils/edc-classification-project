@@ -1,16 +1,12 @@
-function [chunked_vec] = split_to_chunks(dataset, partition_index, chunk_size)
-%splitToChunks: 
-%   Detailed explanation goes here
+function [chuncked_vec] = split_to_chunks(dataset, partition_index, chunck_size)
+%splitToChuncks: reduces the full dataset into a reduced dataset of size
+%chunck_size, at index partition_index.
 
 if partition_index == 1
     i = 1;
 else 
-    i = (partition_index-1)*chunk_size;
+    i = (partition_index-1)*chunck_size;
 end
 
-
-chunked_vec = dataset(i:i+chunk_size-1, :);
-
-
+chuncked_vec = dataset(i:i+chunck_size-1, :);
 end
-
