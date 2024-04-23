@@ -3,11 +3,11 @@ clc
 close all
 
 %% Task 1a - NN-based classifier using the Euclidian distance
-
+tic
 %% Initialization
 % Constant values
 num_classes = 10;
-num_test_samples = 1000;
+num_test_samples = 100;
 
 % Initialize data set
 load('data/data_all.mat');
@@ -20,7 +20,6 @@ test_images = testv(1:num_test_samples, :);
 test_labels = testlab(1:num_test_samples);
 
 % Iterate over test images
-tic
 for j = 1:num_test_samples
     % Compute euclidean distance
     distances = sqrt(sum((trainv - test_images(j, :)).^2, 2));
