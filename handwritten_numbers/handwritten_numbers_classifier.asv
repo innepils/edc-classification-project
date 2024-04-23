@@ -64,12 +64,14 @@ disp(confusion_matrix);
 fprintf('Error Rate: %.2f%%\n', error_rate * 100);
 
 
+
 %% Task 2b - Plotting
 % x = zeros(28,28);
 % x(:) = testv(1,:);
 % image(x');
 % 
 % result = dist(trainv(15,:)', trainv(15,:));
+
 
 %% FAST SOLUTION
 % model = fitcknn(trainv,trainlab);

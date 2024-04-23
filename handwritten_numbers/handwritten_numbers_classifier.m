@@ -10,6 +10,7 @@ num_classes = 10;
 load('data/data_all.mat');
 
 % Split data set into chunks of samples
+
 %chunk_size = 10;
 %training_set = split_to_chunks(trainv, 1, chunk_size);
 
@@ -74,3 +75,4 @@ fprintf('Error Rate: %.2f%%\n', error_rate * 100);
 % new_observation = testv(i,:);
 % predicted_label = predict(model, new_observation);
 % disp(predicted_label);
+
