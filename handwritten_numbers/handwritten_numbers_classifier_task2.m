@@ -22,12 +22,10 @@ trainv_sorted = trainv(sortIdx, :);
 templates = [];
 
 for i = 1:num_classes
-    chunksplit_to_chunks(trainv_sorted, i, size(trainv_sorted,1)/num_classes);
-
+    reduced_trainv_sorted = split_to_chunks(trainv_sorted, i, size(trainv_sorted,1)/num_classes);
+    [idx, C] = kmeans(reduced_trainv_sorted, M);
+    
 end
-
-
-
 
 % class_templates = cell(num_classes, 1); % Cell array to store templates for each class
 % 
