@@ -5,8 +5,8 @@ function [chunked_vec] = split_to_chunks(dataset, partition_index, chunk_size)
 if partition_index == 1
     i = 1;
 else 
-    i = (partition_index-1)*chunck_size;
+    i = (partition_index-1)*chunk_size;
 end
 
-chuncked_vec = dataset(i:i+chunck_size-1, :);
+chunked_vec = dataset(i:i+chunk_size-1, :);
 end
