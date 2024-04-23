@@ -31,7 +31,7 @@ test_labels = testlab(1:num_test_samples);
 % Iterate over test images
 for j = 1:num_test_samples
     % Compute euclidean distance
-    distances = sqrt(sum((train_images - test_images(j, :)).^2, 2));
+    distances = sum((train_images - test_images(j, :)).^2, 2);
     
     % Find nearest neighbor
     [~, nn] = min(distances);
@@ -50,7 +50,7 @@ for j = 1:num_test_samples
     
     % Check if misclassified
     if true_label ~= predicted_label
-        incorrect = [incorrect; j];
+        incorrect = [incorrect; j, true_label, predicted_label];
     end
 end
 
@@ -64,7 +64,7 @@ fprintf('Error Rate: %.2f%%\n', error_rate * 100);
 
 %% Task 2b - Plotting
 % x = zeros(28,28);
-% x(:) = testv(1,:);
+% x(:) = testv(116,:);
 % image(x');
 % 
 % result = dist(trainv(15,:)', trainv(15,:));
