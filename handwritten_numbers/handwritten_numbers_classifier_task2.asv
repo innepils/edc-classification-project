@@ -22,8 +22,7 @@ trainv_sorted = trainv(sortIdx, :);
 templates = [];
 
 for i = 1:num_classes
-    chunksplit_to_chunks(trainv_sorted, i, size(trainv_sorted,1)/num_classes);
-
+    split_to_chunks(trainv_sorted, i, size(trainv))
 end
 
 
