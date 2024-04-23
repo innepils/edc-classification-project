@@ -10,6 +10,7 @@ num_classes = 10;
 load('data/data_all.mat');
 
 % Split data set into chunks of samples
+
 %chunk_size = 10;
 %training_set = split_to_chunks(trainv, 1, chunk_size);
 
@@ -52,6 +53,7 @@ for j = 1:num_test_samples
     if true_label ~= predicted_label
         % Add index of misclassified sample to array
         misclassified_indices = [misclassified_indices; j];
+
     end
 end
 
@@ -62,6 +64,7 @@ error_rate = 1 - sum(diag(confusion_matrix)) / sum(sum(confusion_matrix));
 disp('Confusion Matrix:');
 disp(confusion_matrix);
 fprintf('Error Rate: %.2f%%\n', error_rate * 100);
+
 
 % Inspect misclassified samples
 disp('Misclassified Sample Indices:');
@@ -86,3 +89,4 @@ misclassified_labels = test_labels(misclassified_indices);
 % new_observation = testv(i,:);
 % predicted_label = predict(model, new_observation);
 % disp(predicted_label);
+
