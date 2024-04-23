@@ -5,6 +5,7 @@ close all
 %% Initialization
 % Constant values
 num_classes = 10;
+M = 64;             % number of clusters
 
 % Initialize data set
 load('data/data_all.mat');
@@ -12,6 +13,23 @@ load('data/data_all.mat');
 % Split data set into chunks of samples
 %chunk_size = 10;
 %training_set = split_to_chunks(trainv, 1, chunk_size);
+
+%% Task 2a - Clustering
+% Perform clustering for each class
+
+class_templates = cell(num_classes, 1); % Cell array to store templates for each class
+
+for class = 1:num_classes
+    % Select training vectors for the current class
+    class_indices = find(trainlab == class);
+    class_vectors = trainv(class_indices, :);
+    
+    % Perform k-means clustering
+    [~, class_centers] = kmeans(class_vectors, M);
+    
+    % Store cluster centers as templates for the current class
+    class_templates{class} = class_centers;
+end
 
 %% Task 1a - NN-based classifier using the Euclidian distance
 
@@ -28,30 +46,30 @@ test_images = testv(1:num_test_samples, :);
 test_labels = testlab(1:num_test_samples);
 
 % Iterate over test images
-for j = 1:num_test_samples
-    % Compute euclidean distance
-    distances = sum((train_images - test_images(j, :)).^2, 2);
-    
-    % Find nearest neighbor
-    [~, nn] = min(distances);
-    
-    % Predicted label based on nearest neighbor
-    predicted_label = train_labels(nn);
-    
-    % True label
-    true_label = test_labels(j);
-    
-    % Update confusion matrix
-    confusion_matrix(true_label + 1, predicted_label + 1) = confusion_matrix(true_label + 1, predicted_label + 1) + 1;
-
-    disp(['True Label: ', num2str(true_label)]);
-    disp(['Predicted Label: ', num2str(predicted_label)]);
-    
-    % Check if misclassified
-    if true_label ~= predicted_label
-        incorrect = [incorrect; j, true_label, predicted_label];
-    end
-end
+% for j = 1:num_test_samples
+%     % Compute euclidean distance
+%     distances = sum((train_images - test_images(j, :)).^2, 2);
+% 
+%     % Find nearest neighbor
+%     [~, nn] = min(distances);
+% 
+%     % Predicted label based on nearest neighbor
+%     predicted_label = train_labels(nn);
+% 
+%     % True label
+%     true_label = test_labels(j);
+% 
+%     % Update confusion matrix
+%     confusion_matrix(true_label + 1, predicted_label + 1) = confusion_matrix(true_label + 1, predicted_label + 1) + 1;
+% 
+%     disp(['True Label: ', num2str(true_label)]);
+%     disp(['Predicted Label: ', num2str(predicted_label)]);
+% 
+%     % Check if misclassified
+%     if true_label ~= predicted_label
+%         incorrect = [incorrect; j, true_label, predicted_label];
+%     end
+% end
 
 % Compute error rate
 error_rate = 1 - sum(diag(confusion_matrix)) / sum(sum(confusion_matrix));
