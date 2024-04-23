@@ -19,6 +19,9 @@ incorrect = [];
 test_images = testv(1:num_test_samples, :);
 test_labels = testlab(1:num_test_samples);
 
+% Initialize waitbar
+waiting = waitbar(0, 'Starting');
+
 % Iterate over test images
 for j = 1:num_test_samples
     % Compute euclidean distance
@@ -36,8 +39,10 @@ for j = 1:num_test_samples
     % Update confusion matrix
     confusion_matrix(true_label + 1, predicted_label + 1) = confusion_matrix(true_label + 1, predicted_label + 1) + 1;
 
-    disp(['True Label: ', num2str(true_label)]);
-    disp(['Predicted Label: ', num2str(predicted_label)]);
+    waitbar(j/num_test_samples, waiting, sprintf('Progress: %d %%', floor(j/num_test_samples*100)));
+
+%     disp(['True Label: ', num2str(true_label)]);
+%     disp(['Predicted Label: ', num2str(predicted_label)]);
     
     % Check if misclassified
     if true_label ~= predicted_label
