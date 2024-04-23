@@ -10,11 +10,10 @@ num_classes = 10;
 load('data/data_all.mat');
 
 % Split data set into chunks of samples
-
 %chunk_size = 10;
 %training_set = split_to_chunks(trainv, 1, chunk_size);
 
-%% Task 2a - NN-based classifier using the Euclidian distance
+%% Task 1a - NN-based classifier using the Euclidian distance
 
 confusion_matrix = zeros(num_classes, num_classes);
 incorrect = [];
@@ -62,7 +61,7 @@ disp('Confusion Matrix:');
 disp(confusion_matrix);
 fprintf('Error Rate: %.2f%%\n', error_rate * 100);
 
-%% Task 2b - Plotting
+%% Task 1b and 1c - Plotting
 % x = zeros(28,28);
 % x(:) = testv(116,:);
 % image(x');
