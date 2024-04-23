@@ -2,29 +2,20 @@ clear all
 clc
 close all
 
+%% Task 1a - NN-based classifier using the Euclidian distance
 
 %% Initialization
 % Constant values
 num_classes = 10;
+num_test_samples = 1000;
 
 % Initialize data set
 load('data/data_all.mat');
 
-% Split data set into chunks of samples
-%chunk_size = 10;
-%training_set = split_to_chunks(trainv, 1, chunk_size);
-
-%% Task 1a - NN-based classifier using the Euclidian distance
-
 confusion_matrix = zeros(num_classes, num_classes);
 incorrect = [];
 
-% Train on the whole training set
-train_images = trainv;
-train_labels = trainlab;
-
 % Test on a subset of 100 samples
-num_test_samples = 100;
 test_images = testv(1:num_test_samples, :);
 test_labels = testlab(1:num_test_samples);
 
@@ -32,13 +23,13 @@ test_labels = testlab(1:num_test_samples);
 tic
 for j = 1:num_test_samples
     % Compute euclidean distance
-    distances = sqrt(sum((train_images - test_images(j, :)).^2, 2));
+    distances = sqrt(sum((trainv - test_images(j, :)).^2, 2));
     
     % Find nearest neighbor
     [~, nn] = min(distances);
     
     % Predicted label based on nearest neighbor
-    predicted_label = train_labels(nn);
+    predicted_label = trainlab(nn);
     
     % True label
     true_label = test_labels(j);
@@ -55,14 +46,14 @@ for j = 1:num_test_samples
     end
 end
 
-
-% Compute error rate
+% Error rate
 error_rate = 1 - sum(diag(confusion_matrix)) / sum(sum(confusion_matrix));
 
 % Display confusion matrix and error rate
 disp('Confusion Matrix:');
 disp(confusion_matrix);
 fprintf('Error Rate: %.2f%%\n', error_rate * 100);
+
 toc
 %% Task 1b and 1c - Plotting
 % x = zeros(28,28);
