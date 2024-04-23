@@ -24,7 +24,7 @@ train_images = trainv;
 train_labels = trainlab;
 
 % Test on a subset of 100 samples
-num_test_samples = 1000;
+num_test_samples = 100;
 test_images = testv(1:num_test_samples, :);
 test_labels = testlab(1:num_test_samples);
 
