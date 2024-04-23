@@ -11,7 +11,7 @@ load('data/data_all.mat');
 
 % Split data set into chunks of samples
 
-chunk_size = 1000;
+%chunk_size = 10;
 %training_set = split_to_chunks(trainv, 1, chunk_size);
 
 %% Task 2a - NN-based classifier using the Euclidian distance
@@ -20,18 +20,18 @@ confusion_matrix = zeros(num_classes, num_classes);
 incorrect = [];
 
 % Train on the whole training set
-train_images = trainv(1:chunk_size, :);
-train_labels = trainlab(1:chunk_size, :);
+train_images = trainv;
+train_labels = trainlab;
 
 % Test on a subset of 100 samples
-num_test_samples = 100;
+num_test_samples = 1000;
 test_images = testv(1:num_test_samples, :);
 test_labels = testlab(1:num_test_samples);
 
 % Iterate over test images
 for j = 1:num_test_samples
     % Compute euclidean distance
-    distances = sqrt(sum((train_images - test_images(j, :)).^2, 2));
+    distances = sum((train_images - test_images(j, :)).^2, 2);
     
     % Find nearest neighbor
     [~, nn] = min(distances);
@@ -50,7 +50,7 @@ for j = 1:num_test_samples
     
     % Check if misclassified
     if true_label ~= predicted_label
-        incorrect = [incorrect; j];
+        incorrect = [incorrect; j, true_label, predicted_label];
     end
 end
 
@@ -63,11 +63,11 @@ disp(confusion_matrix);
 fprintf('Error Rate: %.2f%%\n', error_rate * 100);
 
 %% Task 2b - Plotting
-x = zeros(28,28);
-x(:) = testv(116,:);
-image(x');
-
-result = dist(trainv(15,:)', trainv(15,:));
+% x = zeros(28,28);
+% x(:) = testv(116,:);
+% image(x');
+% 
+% result = dist(trainv(15,:)', trainv(15,:));
 
 %% FAST SOLUTION
 % model = fitcknn(trainv,trainlab);
