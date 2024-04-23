@@ -131,7 +131,7 @@ disp(confusion_matrix_test);
 fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
 
 % Plot the MSE for each alpha value
-figure;
+figure(1);
 hold on;
 for alpha_index = 1:length(alphas)
     plot(1:iter, MSE_values(alpha_index, :), 'LineWidth', 1.5);
@@ -143,9 +143,26 @@ xlabel('Iterations');
 ylabel('MSE');
 ylim([5,30]);
 grid on;
-legend(cellstr(strcat('$\alpha = ', num2str(alphas'), '$')), 'Interpreter', 'latex', 'Location', 'best');
-title('MSE Training for Different Alpha Values');
+h_legend = legend(cellstr(strcat('$\alpha = ', num2str(alphas'), '$')), 'Interpreter', 'latex', 'Location', 'best');
+set(h_legend, 'FontSize', 12); % Adjust the font size as needed
 
+
+%%%%%%%%%% CONFUSION MATRIX PLOT %%%%%%%%%%%%%
+tiledlayout(1,2);
+nexttile
+cm_training = confusionchart(actual_training_labels, predicted_training_labels);
+cm_training.FontSize = 13;
+
+nexttile
+cm_test = confusionchart(actual_test_labels, predicted_test_labels);
+cm_test.FontSize = 13;
+
+set(gcf, 'Position',  [100, 100, 1000, 400])
+
+% xlabel('True class');
+% ylabel('Predicted class')
+
+%%%%%%%%%%%%%%%%%%%%
 
 
 

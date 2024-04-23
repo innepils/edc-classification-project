@@ -9,7 +9,7 @@ D = 4;          % number of features
 N = 30;         % size of training set
 M = 20;         % size of test set
 
-iter = 2000;
+iter = 3000;
 
 % Load data set
 c1_all = load('Data/class_1'); % Setosa
@@ -47,20 +47,14 @@ W = [W w0];
 
 
 % Define your alpha values
-alphas = [1, 0.5, 0.1, 0.005, 0.001];
+alphas = [0.01, 0.005, 0.0025, 0.001, 0.0005];
 
 % Initialize MSE matrix to store MSE values for each alpha
 MSE_values = zeros(length(alphas), iter);
 
 
-
-
-
-
-
-
-alpha = 1;                 % step factor 
-MSE_training = zeros(1,iter);
+% alpha = 1;                 % step factor 
+% MSE_training = zeros(1,iter);
 gradients_MSE_training = zeros(1, iter);
 
 % Iterate over each alpha value
@@ -137,7 +131,7 @@ disp(confusion_matrix_test);
 fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
 
 % Plot the MSE for each alpha value
-figure;
+figure(1);
 hold on;
 for alpha_index = 1:length(alphas)
     plot(1:iter, MSE_values(alpha_index, :), 'LineWidth', 1.5);
@@ -147,11 +141,23 @@ hold off;
 % Add labels and legend
 xlabel('Iterations');
 ylabel('MSE');
-legend(cellstr(num2str(alphas', 'alpha = %f')), 'Location', 'best');
-title('MSE Training for Different Alpha Values');
+ylim([5,30]);
+grid on;
+h_legend = legend(cellstr(strcat('$\alpha = ', num2str(alphas'), '$')), 'Interpreter', 'latex', 'Location', 'best');
+set(h_legend, 'FontSize', 12); % Adjust the font size as needed
 
+tiledlayout(1,2);
+[cm_training, cm_test] = peaks(20);
+nexttile
+cm_training = confusionchart(actual_training_labels, predicted_training_labels);
 
+nexttile
+cm_test = confusionchart(actual_test_labels, predicted_test_labels);
 
+% figure(2);
+% plot(cm_training);
+% xlabel('True class');
+% ylabel('Predicted class')
 
 %% Sigmoid function
 function y = sigmoid(x)
