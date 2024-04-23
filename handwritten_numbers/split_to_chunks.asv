@@ -1,0 +1,9 @@
+function [chuncked_vec] = split_to_chuncks(dataset, i, chunck_size)
+%splitToChuncks: 
+%   Detailed explanation goes here
+
+chuncked_vec = dataset(i:i+chunck_size-1, :);
+
+
+end
+
