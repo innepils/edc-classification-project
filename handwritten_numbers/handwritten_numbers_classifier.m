@@ -67,6 +67,8 @@ fprintf('Error Rate: %.2f%%\n', error_rate * 100);
 disp('Misclassified Sample Indices:');
 disp(misclassified_indices);
 
+%% Small change here
+
 % Optionally, extract misclassified images and labels for further analysis
 misclassified_images = test_images(misclassified_indices, :);
 misclassified_labels = test_labels(misclassified_indices);
