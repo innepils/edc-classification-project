@@ -2,7 +2,7 @@ clear all
 clc
 close all
 
-%% Initialization
+%% Initialization of the dataset 
 % Constant values
 C = 3;          % number of classes
 D = 4;          % number of features
@@ -33,7 +33,7 @@ c_all = [c1_all; c2_all; c3_all;]';
 c_training = [c1_training; c2_training; c3_training]';
 c_test = [c1_test; c2_test; c3_test]';
 
-%% Task 1
+%% Task 1 - Design/training and generalization
 % Targets
 t1 = [1 0 0]' .* ones(1, 30);
 t2 = [0 1 0]' .* ones(1, 30);
@@ -111,20 +111,20 @@ disp('Confusion Matrix (Test Set):');
 disp(confusion_matrix_test);
 fprintf('Error Rate (Test Set): %.2f%%\n', error_rate_test * 100);
 
-%% Task 2
+%% Task 2 - Features and linear separability
 % Plots of features
-histogram_feature(c1_all, c2_all, c3_all, 1, 1, 'Sepal length');
-histogram_feature(c1_all, c2_all, c3_all, 2, 2, 'Sepal width');
-histogram_feature(c1_all, c2_all, c3_all, 3, 3, 'Petal length');
-histogram_feature(c1_all, c2_all, c3_all, 4, 4, 'Petal length');
+% histogram_feature(c1_all, c2_all, c3_all, 1, 1, 'Sepal length');
+% histogram_feature(c1_all, c2_all, c3_all, 2, 2, 'Sepal width');
+% histogram_feature(c1_all, c2_all, c3_all, 3, 3, 'Petal length');
+% histogram_feature(c1_all, c2_all, c3_all, 4, 4, 'Petal length');
 
 %Scatter plot of features
-scatter_plot(c1_all, c2_all, c3_all, 5);
+% scatter_plot(c1_all, c2_all, c3_all, 5);
 
 % figure(6);
-plot(1:iter, MSE_training);
-ylabel('MSE');
-xlabel('Iterations');
+% plot(1:iter, MSE_training);
+% ylabel('MSE');
+% xlabel('Iterations');
 
 %% Sigmoid function
 function y = sigmoid(x)
