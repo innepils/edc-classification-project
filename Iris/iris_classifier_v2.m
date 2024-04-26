@@ -23,10 +23,10 @@ c3_all = load('Data/class_3'); % Virginica
 % c3_all = remove_feature(c3_all, feature_number);
 
 % Split data set into training set and test set
-partition_index = 30;
-[c1_training, c1_test] = partition_dataset(c1_all,partition_index);
-[c2_training, c2_test] = partition_dataset(c2_all,partition_index);
-[c3_training, c3_test] = partition_dataset(c3_all,partition_index);
+partition_index = 20;
+[c1_test, c1_training] = partition_dataset(c1_all,partition_index);
+[c2_test, c2_training] = partition_dataset(c2_all,partition_index);
+[c3_test, c3_training] = partition_dataset(c3_all,partition_index);
 
 % Merge datasets 
 c_all = [c1_all; c2_all; c3_all;]';

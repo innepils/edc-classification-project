@@ -150,6 +150,7 @@ for i = 1:numel(predicted_test_labels)
     predicted_test_labels_names{i} = class_names{predicted_test_labels(i)};
 end
 
+
 tiledlayout(1,2);
 nexttile
 cm_training = confusionchart(actual_training_labels_names, predicted_training_labels_names);
