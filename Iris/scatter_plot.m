@@ -1,6 +1,12 @@
 function scatter_plot(dataSet1, dataSet2, dataSet3, figNum)
-%SCATTER_PLOT Summary of this function goes here
-%   Detailed explanation goes here
+% scatter_plot: Produces a scatter plot of all four features in a 1x2   
+%               matrix. Each point (x,y) consists of (length, width) of 
+%               either sepals or petals.
+%
+% Output:           Two scatter plots in a 1x2 matrix
+%
+% Input:            dataSetX: Dataset of each class that should be plotted
+%                   figNum: The number given to the plotted figure. 
 
 %Sepal
 p11 = dataSet1(:, 1);

@@ -84,3 +84,6 @@ disp(confusion_matrix);
 fprintf('Error Rate: %.2f%%\n', error_rate * 100);
 toc
 
+cm = confusionchart(confusion_matrix,{'0','1','2','3','4','5','6','7','8','9'});
+cm.Title = 'Clustering, K=1';
+cm.FontSize = 13;
