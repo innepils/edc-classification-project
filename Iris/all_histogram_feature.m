@@ -1,6 +1,11 @@
 function all_histogram_feature(dataSet1, dataSet2, dataSet3, figNum)
-%PLOT_FEATURES Summary of this function goes here
-%   Detailed explanation goes here
+%all_histogram_feature: Plots a histogram of all four features in a 2x2
+%                       matrix. Each histogram contains all three classes. 
+%   
+% Output:           Four histograms in a 2x2 matrix
+%
+% Input:            dataSetX: Dataset of each class that should be plotted
+%                   figNum: The number given to the plotted figure. 
 
 p11 = dataSet1(:, 1);
 p12 = dataSet2(:, 1);
