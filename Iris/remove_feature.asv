@@ -1,9 +1,0 @@
-function modified_dataset = remove_feature(dataset, feature_number)
-% remove_feature: Removes the feature of index featrue_number from the 
-
-%
-%
-   
-    modified_dataset = dataset;
-    modified_dataset(:,feature_number) = [];
-end

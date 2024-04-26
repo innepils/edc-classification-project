@@ -76,32 +76,32 @@ close all
 % 
 % result = dist(trainv(15,:)', trainv(15,:));
 
-% tiledlayout(1,4);
-% nexttile
-% x = zeros(28,28);
-% x(:) = testv(54,:);
-% image(x');
-% xlabel('Predicted: 5, Correct: 5')
-% 
-% nexttile
-% x = zeros(28,28);
-% x(:) = testv(112,:);
-% image(x');
-% xlabel('Predicted: 7, Correct: 7')
-% 
-% 
-% nexttile
-% x = zeros(28,28);
-% x(:) = testv(174,:);
-% image(x');
-% xlabel('Predicted: 3, Correct: 3')
-% 
-% 
-% nexttile
-% x = zeros(28,28);
-% x(:) = testv(283,:);
-% image(x');
-% xlabel('Predicted: 7, Correct: 7')
+tiledlayout(1,4);
+nexttile
+x = zeros(28,28);
+x(:) = testv(54,:);
+image(x');
+xlabel('Predicted: 5, Correct: 5')
+
+nexttile
+x = zeros(28,28);
+x(:) = testv(112,:);
+image(x');
+xlabel('Predicted: 7, Correct: 7')
+
+
+nexttile
+x = zeros(28,28);
+x(:) = testv(174,:);
+image(x');
+xlabel('Predicted: 3, Correct: 3')
+
+
+nexttile
+x = zeros(28,28);
+x(:) = testv(283,:);
+image(x');
+xlabel('Predicted: 7, Correct: 7')
 
 
 %% FAST SOLUTION

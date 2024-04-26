@@ -7,7 +7,7 @@ tic
 % Constant values
 num_classes = 10;
 M = 64;             % number of clusters
-k = 1;              % number of nearest neighbors
+k = 7;              % number of nearest neighbors
 % Initialize data set
 load('data/data_all.mat');
 
@@ -23,6 +23,7 @@ for i = 1:num_classes
     reduced_trainv_sorted = split_to_chunks(trainv_sorted, i, size(trainv_sorted,1)/num_classes);
     [~, centroids_vec(i*M-M+1:i*M, :)] = kmeans(reduced_trainv_sorted, M);
 end
+
 
 % Generate centroids labels
 centroids_lab = zeros(size(centroids_vec,1),1);
@@ -79,3 +80,9 @@ disp('Confusion Matrix:');
 disp(confusion_matrix);
 fprintf('Error Rate: %.2f%%\n', error_rate * 100);
 toc
+
+
+cm = confusionchart(confusion_matrix,{'0','1','2','3','4','5','6','7','8','9'});
+cm.Title = 'Clustering, K=7';
+cm.FontSize = 13;
+

@@ -1,4 +1,3 @@
-%
 %   Description: Code for designing and training a linear classifier for
 %                classification of the Iris flower data set.
 %

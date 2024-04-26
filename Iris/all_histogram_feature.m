@@ -69,4 +69,3 @@ legend('Setosa', 'Versicolor', 'Virginica'); title('Petal width')
 hold off
 
 end
-
