@@ -27,7 +27,7 @@ c1_all = remove_feature(c1_all, feature_number);
 c2_all = remove_feature(c2_all, feature_number);
 c3_all = remove_feature(c3_all, feature_number);
 
-feature_number = 1;
+feature_number = 2;
 c1_all = remove_feature(c1_all, feature_number);
 c2_all = remove_feature(c2_all, feature_number);
 c3_all = remove_feature(c3_all, feature_number);
